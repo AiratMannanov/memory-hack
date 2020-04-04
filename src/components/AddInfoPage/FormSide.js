@@ -1,8 +1,16 @@
 import React, { useRef } from 'react'
+import { connect } from "react-redux";
+import { setInfo } from '../../redux/actions/actions';
+import { storage } from '../../firebase/firebase'
+import firebase from 'firebase'
+import axios from 'axios'
 
 import './formSide.scss'
 
-const FormSide = () => {
+const FormSide = (props) => {
+
+  const { personInfo, setInfo } = props;
+
   const firstName = useRef(null);
   const lastName = useRef(null);
   const middleName = useRef(null);
@@ -17,11 +25,60 @@ const FormSide = () => {
   const additionalLinks = useRef(null);
   const email = useRef(null);
 
+  const submitForm = async (e) => {
+    e.preventDefault()
+    if (personInfo.images) {
+      const person = {
+        firstName: firstName.current.value,
+        lastName: lastName.current.value,
+        middleName: middleName.current.value,
+        dateOfBirthday: dateOfBirthday.current.value,
+        dateOfDeath: dateOfDeath.current.value,
+        dateOfСonscription: dateOfСonscription.current.value,
+        placeOfRecruitment: placeOfRecruitment.current.value,
+        motherCity: motherCity.current.value,
+        dutyPlace: dutyPlace.current.value,
+        militaryRank: militaryRank.current.value,
+        historyAboutPerson: historyAboutPerson.current.value,
+        additionalLinks: additionalLinks.current.value,
+        email: email.current.value,
+        images: personInfo.images,
+      }
+      setInfo(person)
+      await firebase.database().ref(`${personInfo.images}`).update(person)
+      const allPeople = (await firebase.database().ref().once('value')).val()
+      const res = Object.values(allPeople).filter(el => el.firstName === firstName.current.value && el.lastName === lastName.current.value).map(el => el.images);
+      Promise.all(res.map(el => storage.ref(`${el}`).getDownloadURL())).then(arrayUrl => {
+        axios.post('/user', {
+          arrayUrl,
+          userUrl: personInfo.images,
+        }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+      })
+
+    } else {
+      setInfo({
+        firstName: firstName.current.value,
+        lastName: lastName.current.value,
+        middleName: middleName.current.value,
+        dateOfBirthday: dateOfBirthday.current.value,
+        dateOfDeath: dateOfDeath.current.value,
+        dateOfСonscription: dateOfСonscription.current.value,
+        placeOfRecruitment: placeOfRecruitment.current.value,
+        motherCity: motherCity.current.value,
+        dutyPlace: dutyPlace.current.value,
+        militaryRank: militaryRank.current.value,
+        historyAboutPerson: historyAboutPerson.current.value,
+        additionalLinks: additionalLinks.current.value,
+        email: email.current.value,
+        images: null,
+      })
+    }
+  }
 
   return (
     <div className="form-side">
       <p>Добавление информации<br />о Герое войны</p>
-      <form>
+      <form onSubmit={submitForm}>
         <div className="inputGroup">
           <input type="text" ref={firstName} placeholder="Фамилия" required />
           <input type="text" ref={lastName} placeholder="Имя" required />
@@ -64,4 +121,12 @@ const FormSide = () => {
   )
 }
 
-export default FormSide
+const mapStateToProps = state => ({
+  personInfo: state.personInfo
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setInfo: (payload) => dispatch(setInfo(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormSide)
