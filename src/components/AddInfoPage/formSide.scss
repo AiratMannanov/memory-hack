@@ -1,0 +1,49 @@
+.form-side {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #857c64;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+
+.inputGroup {
+  display: flex;
+  width: 90%;
+
+  input {
+    font-size: 1.5rem;
+    font-style: italic;
+    width: 50%;
+    height: 4rem;
+    border-radius: 0.5rem;
+    border: 0.05rem solid #857c64;
+    outline: none;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+  }
+
+  input::placeholder {
+    text-align: center;
+    color: #857c64bd;
+  }
+}
+
+.singleInput {
+  input {
+    width: 100%;
+  }
+}
