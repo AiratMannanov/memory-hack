@@ -2,8 +2,14 @@ import React from "react";
 import Tree from "react-d3-tree";
 import clone from "clone";
 
+// const map = {
+//   'Иван0': debugData,
+//   'Александр00': debugData.children[0]
+// }
+
 const debugData = {
-  name: "Иванов Иван Иванович",
+  name: "Иван",
+  idx: "Иван0",
   attributes: {
     keyA: 'val A',
     keyB: 'val B',
@@ -27,33 +33,49 @@ const debugData = {
   },
   children: [
     {
-      name: "Иванов Александр Иванович"
+      name: "Александр",
+      idx: "Александр00",
+      children: [],
     },
     {
-      name: "Иванов Алексей Александрович",
+      name: "Алексей",
+      idx: "Алексей01",
       children: [
         {
-          name: "Иванов Михаил Алексеевич",
+          name: "Михаил",
+          idx: "Михаил20",
           children: [
             {
-              name: "Иванов Михаил Алексеевич"
+              name: "Колыван",
+              idx: "Колыван30",
+              children: [],
             },
             {
-              name: "Иванова Мария Алексеевна"
+              name: "Мария",
+              idx: "Мария31",
+              children: [],
             }
           ]
         },
         {
-          name: "Иванова Мария Алексеевна"
+          name: "Айрат",
+          idx: "Айрат21",
+          children: [],
         },
         {
-          name: "Иванова Мария Алексеевна"
+          name: "Тёма",
+          idx: "Тёма22",
+          children: [],
         },
         {
-          name: "Иванова Мария Алексеевна"
+          name: "Даня",
+          idx: "Даня23",
+          children: [],
         },
         {
-          name: "Иванова Мария Алексеевна"
+          name: "Стас",
+          idx: "Стас24",
+          children: [],
         }
       ]
     }
@@ -65,26 +87,68 @@ const containerStyles = {
   height: "100vh"
 };
 
-export default class CenteredTree extends React.PureComponent {
+function getTreeRoot(tree) {
+  let root = tree;
+  while (root && root.parent) {
+    root = root.parent;
+  }
+  return root;
+}
+
+export default class CenteredTree extends React.Component {
   state = {
     data: debugData,
     value: ''
   };
 
+
   handleClick = (nodeData, evt) => {
-    console.log(nodeData, evt);
+    // console.log(nodeData, evt);
+    const { id, name } = nodeData;
+    // console.log(nodeData);
+    // console.log(JSON.stringify(this.state.data));
+
+    nodeData.parent.children = nodeData.parent.children.filter((child) => child.idx !== nodeData.idx);
+    if (nodeData.parent._children) {
+      nodeData.parent._children = nodeData.parent._children.filter((child) => child.idx !== nodeData.idx);
+    }
+    this.setState((prevState) => {
+      return {
+        data: getTreeRoot(nodeData),
+      };
+    });
+
+    // const nodeStr = JSON.stringify(nodeData.parent)
+    // console.log(nodeStr);
+
+    // if (name === 'Иванов Александр Иванович') {
+      //this.addChildNode('gagasgasdfgfadsg');
+    // }
+    // console.log(id);
   }
 
-  injectedNodesCount = 0;
+  getFiniteValue(obj) {
+    getProp(obj);
+
+    function getProp(o) {
+        for(var prop in o) {
+            if(typeof(o[prop]) === 'object') {
+                getProp(o[prop]);
+            } else {
+                console.log('Finite value: ',o[prop])
+            }
+        }
+    }
+  }
 
   addChildNode = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const nextData = clone(this.state.data);
-    const target = nextData.children;
+    const target = nextData.children[0].children;
     this.injectedNodesCount++;
     target.push({
-      name: `${this.state.value}`,
-      id: `inserted-node-${this.state.value}`
+      name: `${e}`,
+      id: `inserted-node-${e}`
     });
     this.setState({
       data: nextData
@@ -95,7 +159,6 @@ export default class CenteredTree extends React.PureComponent {
     const nextData = clone(this.state.data);
     const target = nextData.children;
     target.pop();
-    this.injectedNodesCount--;
     this.setState({
       data: nextData
     });
