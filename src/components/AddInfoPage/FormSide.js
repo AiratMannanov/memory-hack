@@ -9,6 +9,7 @@ const FormSide = () => {
   const dateOfBirthday = useRef(null);
   const dateOfDeath = useRef(null);
   const dateOfСonscription = useRef(null);
+  const placeOfRecruitment = useRef(null);
   const motherCity = useRef(null);
   const dutyPlace = useRef(null);
   const militaryRank = useRef(null);
