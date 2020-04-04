@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { storage } from '../../firebase/firebase'
+import { storage,database } from '../../firebase/firebase'
 
 import './main.scss'
 import './photoSide.scss'
@@ -11,14 +11,19 @@ const PhotoSide = () => {
 
   const updateUpload = 0;
 
-  const handleChange = (e) => {
+  const handleChange =async (e) => {
     if (e.target.files[0]) {
-      const uploadTask = storage.ref(`images`).put(e.target.files[0]);
+      await database().ref(`/images`).set({
+        photo:e.target.files[0]
+      })
+      
+      const uploadTask = storage.ref(`images/1`).put(e.target.files[0]);
+            
       uploadTask.on('state_changed',
       undefined,
       undefined,
         () => {
-          storage.ref('images').getDownloadURL().then((u) => {
+          storage.ref('images/1').getDownloadURL().then((u) => {
             setUrl(u);
             setPhotoUpload(true)
           });
