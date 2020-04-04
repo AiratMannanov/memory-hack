@@ -1,0 +1,13 @@
+.add-photo-form-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 15% 35% 50%;
+  grid-template-rows: 100vh;
+
+
+
+
+  .form-side {
+    grid-column-start: 3;
+  }
+}
