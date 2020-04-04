@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
-import './components/Photo/Photo.css'
-const PhotoList = React.lazy(() => import('./components/PhotoList/PhotoList'))
+import '../src/components/Photo/Photo.css'
+const PhotoList = React.lazy(() => import('../src/components/PhotoList/PhotoList'))
 
 function App() {
   return (
