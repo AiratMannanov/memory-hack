@@ -1,34 +1,45 @@
 import React, {useState} from 'react'
 import { storage } from '../../firebase/firebase'
+import firebase from 'firebase'
 
 import './main.scss'
 import './photoSide.scss'
 
+function guidGenerator() {
+  var S4 = function() {
+     return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  };
+  return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+}
+
 const PhotoSide = () => {
+
 
   const [url, setUrl] = useState('');
   const [photoUpload, setPhotoUpload] = useState(false)
 
   const updateUpload = 0;
 
-  function guidGenerator() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-  }
 
   const handleChange = (e) => {
     e.persist()
     if (e.target.files[0]) {
       
-      const uploadTask = storage.ref(`images/${guidGenerator()}`).put(e.target.files[0]);
+      let data = guidGenerator()
+
+      firebase.database().ref(`${data}`).update({
+        data,
+        name:'aa',
+        surname:'a',
+      })
+      
+      const uploadTask = storage.ref(`${data}`).put(e.target.files[0]);
             
       uploadTask.on('state_changed',
       undefined,
       undefined,
         () => {
-          storage.ref('images/1').getDownloadURL().then((u) => {
+          storage.ref(`${data}`).getDownloadURL().then((u) => {
             setUrl(u);
             setPhotoUpload(true)
           });
