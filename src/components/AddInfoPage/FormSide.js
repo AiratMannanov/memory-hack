@@ -33,13 +33,13 @@ const FormSide = () => {
         </div>
 
         <div className="inputGroup">
-          <input type="text" ref={motherCity} placeholder="Местро рождения / Область" />
-          <input type="text" ref={placeOfRecruitment} placeholder="Местро призыва / Область" />
+          <input type="text" ref={motherCity} placeholder="Место рождения / Область" />
+          <input type="text" ref={placeOfRecruitment} placeholder="Место призыва / Область" />
         </div>
 
         <div className="inputGroup">
           <input type="text" ref={dateOfСonscription} placeholder="Год / Дата призыва" />
-          <input type="text" ref={dutyPlace} placeholder="Местро службы" />
+          <input type="text" ref={dutyPlace} placeholder="Место службы" />
         </div>
 
         <div className="inputGroup">
