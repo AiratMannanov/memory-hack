@@ -7,6 +7,7 @@ import {
 
 const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'));
 const Tree = React.lazy(() => import('./components/Tree/Tree'));
+// const NewTree = React.lazy(() => import('./components/NewTree/NewTree'));
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           </Route>
           <Route path='/tree'>
             <Tree />
+            {/* <NewTree /> */}
           </Route>
         </Switch>
       </Suspense>
