@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { connect } from 'react-redux'
 import './App.css';
 import MyComponent from './components/Tree/Tree';
+
+
+const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'))
 
 function App() {
   return (
     <div className="App">
-      fswgfafew
-      <MyComponent />
+      <Suspense fallback="Loading...">
+        <AddInfoPage />
+      </Suspense>
+      {/* <MyComponent /> */}
     </div>
   );
 }
