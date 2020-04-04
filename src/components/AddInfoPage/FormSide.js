@@ -17,9 +17,6 @@ const FormSide = () => {
   const additionalLinks = useRef(null);
   const email = useRef(null);
 
-  const addInfo = () => {
-
-  }
 
   return (
     <div className="form-side">
