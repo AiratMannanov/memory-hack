@@ -60,12 +60,14 @@ const PhotoSide = (props) => {
             });
           });
         const allPeople = (await firebase.database().ref().once('value')).val()
-        const res = Object.values(allPeople).filter(el => el.firstName === personInfo.firstName && el.lastName === personInfo.lastName).map(el => el.images)
+        const res = Object.values(allPeople).filter(el => el.firstName === personInfo.firstName && el.lastName === personInfo.lastName && el.images !== data).map(el => el.images)
         Promise.all(res.map(el => storage.ref(`${el}`).getDownloadURL())).then(arrayUrl => {
-          axios.post('/user', {
-            arrayUrl,
-            userUrl: personInfo.images,
-          }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+          console.log(arrayUrl);
+          
+          // axios.post('/user', {
+          //   arrayUrl,
+          //   userUrl: personInfo.images,
+          // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
         })
       } else {
         const uploadTask = storage.ref(`${data}`).put(e.target.files[0]);

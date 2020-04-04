@@ -47,12 +47,14 @@ const FormSide = (props) => {
       setInfo(person)
       await firebase.database().ref(`${personInfo.images}`).update(person)
       const allPeople = (await firebase.database().ref().once('value')).val()
-      const res = Object.values(allPeople).filter(el => el.firstName === firstName.current.value && el.lastName === lastName.current.value).map(el => el.images);
+      const res = Object.values(allPeople).filter(el => el.firstName === firstName.current.value && el.lastName === lastName.current.value && el.images !== personInfo.images).map(el => el.images);
       Promise.all(res.map(el => storage.ref(`${el}`).getDownloadURL())).then(arrayUrl => {
-        axios.post('/user', {
-          arrayUrl,
-          userUrl: personInfo.images,
-        }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+        console.log(arrayUrl);
+        
+        // axios.post('/user', {
+        //   arrayUrl,
+        //   userUrl: personInfo.images,
+        // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
       })
 
     } else {
