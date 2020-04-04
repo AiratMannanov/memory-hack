@@ -1,3 +1,5 @@
+const request = require('request');
+
 // Utils for detecting faces
 
 const detectionParams = {
@@ -8,12 +10,12 @@ const detectionParams = {
 
 function setOptionsForDetectionRequest(img) {
   return {
-    uri: uriBase,
+    uri: process.env.URI_DETECTION,
     qs: detectionParams,
     body: `{"url": "${img}"}`,
     headers: {
       'Content-Type': 'application/json',
-      'Ocp-Apim-Subscription-Key': subscriptionKey
+      'Ocp-Apim-Subscription-Key': process.env.SUBSCRIBTION_KEY
     }
   };
 }
@@ -42,7 +44,7 @@ function requestDetectionFace(options) {
 
 function setOptionsForSimilarRequest(faceId, faceIds) {
   return {
-    uri: uriSimilar,
+    uri: process.env.URI_SIMILAR,
     body: {
       "faceId": faceId,
       "faceIds": faceIds,
@@ -52,7 +54,7 @@ function setOptionsForSimilarRequest(faceId, faceIds) {
     json: true,
     headers: {
       'Content-Type': 'application/json',
-      'Ocp-Apim-Subscription-Key': subscriptionKey
+      'Ocp-Apim-Subscription-Key': process.env.SUBSCRIBTION_KEY
     }
   };
 }
