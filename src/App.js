@@ -11,7 +11,7 @@ function App() {
       <Suspense fallback="Loading...">
         <AddInfoPage />
       </Suspense>
-      <MyComponent />
+      {/* <MyComponent /> */}
     </div>
   );
 }
