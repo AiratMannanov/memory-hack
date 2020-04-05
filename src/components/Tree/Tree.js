@@ -1,11 +1,29 @@
 import React from "react";
 import Tree from "react-d3-tree";
 import clone from "clone";
+import './Tree.scss';
 
 // const map = {
 //   'Иван0': debugData,
 //   'Александр00': debugData.children[0]
 // }
+const manCircle = {
+  shape: 'circle',
+  shapeProps: {
+    r: 10,
+    fill: '#2d9bf5',
+    stroke: 'none',
+  }
+};
+
+const womanCircle = {
+  shape: 'circle',
+  shapeProps: {
+    r: 10,
+    fill: 'pink',
+    stroke: 'none',
+  },
+};
 
 const debugData = {
   name: "Иван",
@@ -16,65 +34,61 @@ const debugData = {
     keyC: 'val C',
   },
   sex: 'man',
-  nodeSvgShape: {
-    shape: 'circle',
-    shapeProps: {
-      r: 10,
-      fill: 'blue',
-    },
-  },
-  styles: {
-    links: {
-            fill:"none",
-            stroke: "#000",
-            strokeWidth: "2px",
-            strokeDasharray:"2,2"
-          },
-  },
+  nodeSvgShape: manCircle,
   children: [
     {
-      name: "Александр",
-      idx: "Александр00",
-      children: [],
-    },
-    {
-      name: "Алексей",
-      idx: "Алексей01",
+      name: "Мария",
+      idx: "Мария10",
+      nodeSvgShape: womanCircle,
       children: [
         {
-          name: "Михаил",
-          idx: "Михаил20",
+          name: "Анастасия",
+          idx: "Анастасия20",
+          nodeSvgShape: womanCircle,
           children: [
             {
-              name: "Колыван",
-              idx: "Колыван30",
-              children: [],
+              name: "Михаил",
+              idx: "Михаил30",
+              nodeSvgShape: manCircle,
+              children: [
+                {
+                  name: "Колыван",
+                  idx: "Колыван40",
+                  nodeSvgShape: manCircle,
+                  children: [],
+                },
+                {
+                  name: "Мария",
+                  idx: "Мария41",
+                  nodeSvgShape: womanCircle,
+                  children: [],
+                }
+              ]
             },
-            {
-              name: "Мария",
-              idx: "Мария31",
-              children: [],
-            }
           ]
         },
         {
           name: "Айрат",
           idx: "Айрат21",
+          nodeSvgShape: manCircle,
           children: [],
         },
         {
           name: "Тёма",
           idx: "Тёма22",
+          nodeSvgShape: manCircle,
           children: [],
         },
         {
           name: "Даня",
           idx: "Даня23",
+          nodeSvgShape: manCircle,
           children: [],
         },
         {
           name: "Стас",
           idx: "Стас24",
+          nodeSvgShape: manCircle,
           children: [],
         }
       ]
@@ -198,6 +212,7 @@ export default class CenteredTree extends React.Component {
           // initialDepth={1}
           // nodeSvgShape={{shape: 'none'}}
           collapsible={false}
+          textLayout={{x: '18', y:'-8'}}
         />
       </div>
     );
