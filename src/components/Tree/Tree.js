@@ -1,100 +1,8 @@
 import React from "react";
 import Tree from "react-d3-tree";
 import clone from "clone";
+import { debugData, manCircle, womanCircle } from '../../utils/config';
 import './Tree.scss';
-
-// const map = {
-//   'Иван0': debugData,
-//   'Александр00': debugData.children[0]
-// }
-const manCircle = {
-  shape: 'circle',
-  shapeProps: {
-    r: 10,
-    fill: '#2d9bf5',
-    stroke: 'none',
-  }
-};
-
-const womanCircle = {
-  shape: 'circle',
-  shapeProps: {
-    r: 10,
-    fill: 'pink',
-    stroke: 'none',
-  },
-};
-
-const debugData = {
-  name: "Иван",
-  idx: "Иван0",
-  attributes: {
-    keyA: 'val A',
-    keyB: 'val B',
-    keyC: 'val C',
-  },
-  sex: 'man',
-  nodeSvgShape: manCircle,
-  children: [
-    {
-      name: "Мария",
-      idx: "Мария10",
-      nodeSvgShape: womanCircle,
-      children: [
-        {
-          name: "Анастасия",
-          idx: "Анастасия20",
-          nodeSvgShape: womanCircle,
-          children: [
-            {
-              name: "Михаил",
-              idx: "Михаил30",
-              nodeSvgShape: manCircle,
-              children: [
-                {
-                  name: "Колыван",
-                  idx: "Колыван40",
-                  nodeSvgShape: manCircle,
-                  children: [],
-                },
-                {
-                  name: "Мария",
-                  idx: "Мария41",
-                  nodeSvgShape: womanCircle,
-                  children: [],
-                }
-              ]
-            },
-          ]
-        },
-        {
-          name: "Айрат",
-          idx: "Айрат21",
-          nodeSvgShape: manCircle,
-          children: [],
-        },
-        {
-          name: "Тёма",
-          idx: "Тёма22",
-          nodeSvgShape: manCircle,
-          children: [],
-        },
-        {
-          name: "Даня",
-          idx: "Даня23",
-          nodeSvgShape: manCircle,
-          children: [],
-        },
-        {
-          name: "Стас",
-          idx: "Стас24",
-          nodeSvgShape: manCircle,
-          children: [],
-        }
-      ]
-    }
-  ]
-};
 
 const containerStyles = {
   width: "100%",
@@ -112,86 +20,89 @@ function getTreeRoot(tree) {
 export default class CenteredTree extends React.Component {
   state = {
     data: debugData,
-    value: ''
+    value: '',
   };
 
-
   handleClick = (nodeData, evt) => {
-    const { id, name } = nodeData;
-
-    nodeData.parent.children = nodeData.parent.children.map((child) => {
-      if (child.idx === nodeData.idx) {
-        // console.log(child.idx);
-        // console.log(nodeData.idx);
-        
-        console.log(child);
-        if (child.children) {
-          child.children.push({
-            name: "FFFFFFFFFFFFFFFFFFFFFFFF",
-            idx: "Стас24",
-            nodeSvgShape: manCircle,
-            children: [],
-          });
-        } else {
-          child.children = [];
-          child.children.push({
-            name: "Стас",
-            idx: "Стас24",
-            nodeSvgShape: manCircle,
-            children: [],
-          });
-        }
-      }
-      return child;
+    //MODAL
+    const modal = document.querySelector('.modal');
+    modal.classList.add('target');
+    this.setState((prevState) => {
+      return {
+        nodeData,
+      };
     });
+  }
 
-    // УДАЛЕНИЕ ЭЛЕМЕНТА
-    // nodeData.parent.children = nodeData.parent.children.filter((child) => child.idx !== nodeData.idx);
-    // if (nodeData.parent._children) {
-    //   nodeData.parent._children = nodeData.parent._children.filter((child) => child.idx !== nodeData.idx);
-    // }
+  addChildNode = (e) => {
+    e.preventDefault();
+    console.log(this.state.nodeData);
+    console.log(this.state.data);
+    console.log(this.state.value);
+    const { nodeData, value } = this.state;
+    //ADDING
+    if (nodeData.parent) {
+      nodeData.parent.children = nodeData.parent.children.map((child) => {
+        if (child.idx === nodeData.idx) {
+          if (child.children) {
+            child.children.push({
+              name: value,
+              idx: `${value}${nodeData.parent.name}`,
+              nodeSvgShape: manCircle,
+              children: [],
+            });
+          } else {
+            child.children = [];
+            child.children.push({
+              name: value,
+              idx: `${value}${nodeData.parent.name}`,
+              nodeSvgShape: manCircle,
+              children: [],
+            });
+          }
+        }
+        return child;
+      });
+    } else {
+      nodeData.children.push({
+        name: value,
+        idx: `${value}${nodeData.name}`,
+        nodeSvgShape: manCircle,
+        children: [],
+      });
+    }
     this.setState((prevState) => {
       return {
         data: getTreeRoot(nodeData),
       };
     });
-  }
-
-  getFiniteValue(obj) {
-    getProp(obj);
-
-    function getProp(o) {
-        for(var prop in o) {
-            if(typeof(o[prop]) === 'object') {
-                getProp(o[prop]);
-            } else {
-                console.log('Finite value: ',o[prop])
-            }
-        }
-    }
-  }
-
-  addChildNode = (e) => {
-    // e.preventDefault();
-    const nextData = clone(this.state.data);
-    const target = nextData.children[0].children;
-    this.injectedNodesCount++;
-    target.push({
-      name: `${e}`,
-      id: `inserted-node-${e}`
-    });
-    this.setState({
-      data: nextData
-    });
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('target');
   };
 
   removeChildNode = () => {
-    const nextData = clone(this.state.data);
-    const target = nextData.children;
-    target.pop();
-    this.setState({
-      data: nextData
-    });
+    // УДАЛЕНИЕ ЭЛЕМЕНТА
+    const { nodeData } = this.state;
+    const { parent } = nodeData;
+    if (parent) {
+      parent.children = parent.children.filter((child) => child.idx !== nodeData.idx);
+      if (parent._children) {
+        parent._children = parent._children.filter((child) => child.idx !== nodeData.idx);
+      }
+      this.setState((prevState) => {
+        return {
+          data: getTreeRoot(nodeData),
+        };
+      });
+    } else {
+      this.setState((prevState) => {
+        return {
+          data: {},
+        };
+      });
+    }
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('target');
   };
 
   componentDidMount() {
@@ -209,14 +120,39 @@ export default class CenteredTree extends React.Component {
     this.setState({value: event.target.value});
   }
 
+  closeModal(e) {
+    e.preventDefault();
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('target');
+  }
+
   render() {
     return (
-      <div style={containerStyles} ref={tc => (this.treeContainer = tc)}>
-        <form onSubmit={(e) => this.addChildNode(e)}>
-          <input name="aaa" type="text" value={this.state.value} onChange={(e) => this.handleChange(e)}></input>
-          <button>Add Node</button>
-        </form>
-        <button onClick={this.removeChildNode}>Remove Node</button>
+      <div style={containerStyles} ref={tc => (this.treeContainer = tc)} className="top-tree">
+        <div id="Modal1" className="modal">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              {/* <header>
+                <a href="#" className="closebtn" onClick={(e) => this.closeModal(e)}>X</a>
+              </header> */}
+              <div className="modal-body">
+                <div className="m-title">
+                  <h1>Внесите изменения</h1>
+                </div>
+                <div className="form-edit">
+                  <form onSubmit={(e) => this.addChildNode(e)}>
+                    <input name="aaa" type="text" value={this.state.value} onChange={(e) => this.handleChange(e)}></input>
+                    <button>Добавить</button>
+                  </form>
+                  <div className="btn-remove-close">
+                    <button onClick={this.removeChildNode}>Удалить</button>
+                    <button onClick={(e) => this.closeModal(e)}>Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <Tree
           data={this.state.data}
           translate={this.state.translate}
