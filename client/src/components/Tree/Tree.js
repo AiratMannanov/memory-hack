@@ -7,7 +7,7 @@ import { debugData, manCircle, womanCircle } from '../../utils/config';
 import './Tree.scss';
 
 const containerStyles = {
-  width: "100%",
+  width: "90%",
   height: "100vh"
 };
 
@@ -52,11 +52,26 @@ class CenteredTree extends React.Component {
 
   addChildNode = (e) => {
     e.preventDefault();
-    console.log(this.state.nodeData);
-    console.log(this.state.data);
-    console.log(this.state.value);
-    const { nodeData, value } = this.state;
+    // console.log(this.state.nodeData);
+    // console.log(this.state.data);
+    // console.log(this.state.value);
+    const { nodeData, value, data } = this.state;
     //ADDING
+    // console.log(nodeData);
+
+    // if (!nodeData) {
+    //   console.log('safsadf');
+      
+    //   return this.setState(() => {
+    //     return {
+    //       data: {
+    //         name: value,
+    //         idx: `${value}${nodeData.name}`,
+    //         nodeSvgShape: manCircle,
+    //         children: [],
+    //     }
+    //   }});
+    // }
     if (nodeData.parent) {
       nodeData.parent.children = nodeData.parent.children.map((child) => {
         if (child.idx === nodeData.idx) {
@@ -194,11 +209,11 @@ class CenteredTree extends React.Component {
           collapsible={false}
           textLayout={{ x: '18', y: '-8' }}
         />
-        <div className="social">
+        {/* <div className="social">
           <img className="icon" src="./instagram.png" alt="instagram" />
           <img className="icon" src="./facebook.png" alt="facebook" />
           <img className="icon" src="./vk.png" alt="vk" />
-        </div>
+        </div> */}
       </div>
     );
   }
