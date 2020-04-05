@@ -7,9 +7,12 @@ const Navbar = ({ personInfo }) => {
   return (
     <div className="sidebar-container">
       <ul>
-        <Link to="/" className="link-sidebar">
+      {
+
+      !personInfo.firstName && <Link to="/" className="link-sidebar">
           Главная страница
         </Link >
+      }
 
         <Link to="/addinfo" className="link-sidebar">
           Добавить Героя
