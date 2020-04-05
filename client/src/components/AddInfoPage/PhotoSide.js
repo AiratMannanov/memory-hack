@@ -62,13 +62,13 @@ const PhotoSide = (props) => {
             info: el,
           }
         })).then(arrayUsers => {
-          // axios.post('/user', {
-          //   arrayUsers,
-          //   user: {
-          //     url: userUrl,
-          //     info: person,
-          //   },
-          // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+          axios.post('/', {
+            arrayUsers,
+            user: {
+              url: userUrl,
+              info: person,
+            },
+          }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
         })
       } else {
         const uploadTask = storage.ref(`${data}`).put(e.target.files[0]);

@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 // Request to azure
 router.post('/', (req, res) => {
   const { userUrl, arrayUrl } = req.body;
-  console.log(userUrl, arrayUrl)
+  console.log(req.body);
 
   // Getting all id's of imgs from azure face
 

@@ -56,13 +56,13 @@ const FormSide = (props) => {
           info:el,
         }
       })).then(arrayUsers => {
-        // axios.post('/user', {
-        //   arrayUsers,
-        //   user: {
-        //     url: userUrl,
-        //     info: person
-        //   },
-        // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+        axios.post('/', {
+          arrayUsers,
+          user: {
+            url: userUrl,
+            info: person
+          },
+        }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
       })
 
     } else {
