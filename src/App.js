@@ -7,12 +7,14 @@ import {
 
 const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'));
 const Tree = React.lazy(() => import('./components/Tree/Tree'));
-// const NewTree = React.lazy(() => import('./components/NewTree/NewTree'));
+const Sidebar = React.lazy(() => import('./components/Sidebar/'));
+
 
 function App() {
   return (
     <div className="App">
       <Suspense fallback="Loading...">
+        <Sidebar />
         <Switch>
           <Route exact path='/'>
             <AddInfoPage />
