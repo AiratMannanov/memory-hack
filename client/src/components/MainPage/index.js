@@ -5,7 +5,7 @@ import './MainPage.scss'
 const MainPage = () => {
   return (
     <div className="main-page-container">
-      Your photos
+      <img src="./image_2020-04-05_13-49-24.png" alt="альтернативный текст" />
     </div>
   )
 }
