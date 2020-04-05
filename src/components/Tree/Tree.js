@@ -117,7 +117,7 @@ export default class CenteredTree extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
   }
 
   closeModal(e) {
@@ -140,11 +140,11 @@ export default class CenteredTree extends React.Component {
                   <h1>Внесите изменения</h1>
                 </div>
                 <div className="form-edit">
-                  <form onSubmit={(e) => this.addChildNode(e)}>
+                  <form className="form-edit-first" onSubmit={(e) => this.addChildNode(e)}>
                     <input name="aaa" type="text" value={this.state.value} onChange={(e) => this.handleChange(e)}></input>
                     <button>Добавить</button>
                   </form>
-                  <div className="btn-remove-close">
+                  <div className="btn-remove-close form-edit-first">
                     <button onClick={this.removeChildNode}>Удалить</button>
                     <button onClick={(e) => this.closeModal(e)}>Закрыть</button>
                   </div>
@@ -159,12 +159,12 @@ export default class CenteredTree extends React.Component {
           orientation={"vertical"}
           onClick={this.handleClick}
           // nodeSize={{x: 300, y: 150}	}
-          scaleExtent={{min: 0.1, max:2}}
-          separation={{siblings: 2, nonSiblings: 2}}
+          scaleExtent={{ min: 0.1, max: 2 }}
+          separation={{ siblings: 2, nonSiblings: 2 }}
           // initialDepth={1}
           // nodeSvgShape={{shape: 'none'}}
           collapsible={false}
-          textLayout={{x: '18', y:'-8'}}
+          textLayout={{ x: '18', y: '-8' }}
         />
       </div>
     );

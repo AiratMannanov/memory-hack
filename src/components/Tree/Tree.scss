@@ -27,7 +27,8 @@
 }
 
 .top-tree {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 20px;
   text-align: center;
   a {
@@ -64,7 +65,8 @@
   overflow: auto;
   background-color: #fff;
   &.target {
-    display: table;
+    display: flex;
+    align-items: center;
     position: absolute;
     animation-name: fadeIn;
     animation-duration: 0.3s;
@@ -72,6 +74,8 @@
     .modal-dialog {
       .modal-content {
         .modal-body {
+          font-size: 1.8rem;
+          font-weight: 400;
           .m-title {
             opacity: 1;
             animation-name: fromBottom;
@@ -111,12 +115,49 @@
           text-align: center;
           width: 100%;
         .form-edit {
-          .btn-remove-close {
-            
+          form {
           }
+
         }
         }
       }
     }
+  }
+}
+
+.form-edit-first {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  input {
+    font-size: 1.5rem;
+    height: 3rem;
+    width: 20rem;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    outline: none;
+    padding-left: 0.4rem;
+  }
+
+  button {
+    font-size: 1.5rem;
+    font-weight: 500;
+    outline: none;
+    width: 10rem;
+    border-radius: 0.4rem;
+    transition: all 1s;
+  } 
+
+  button:hover {
+    background-color: rgba(161, 159, 159, 0.15);
+  }
+}
+
+.btn-remove-close {
+  margin-bottom: 6rem;
+  button {
+    margin-left: 0.5rem;
+    height: 3rem;
   }
 }
