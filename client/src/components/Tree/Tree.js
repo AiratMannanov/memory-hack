@@ -110,7 +110,7 @@ export default class CenteredTree extends React.Component {
     const dimensions = this.treeContainer.getBoundingClientRect();
     this.setState({
       translate: {
-        x: dimensions.width / 2,
+        x: dimensions.width / 1.8,
         y: dimensions.height / 6
       }
     });
