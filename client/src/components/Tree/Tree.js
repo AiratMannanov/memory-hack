@@ -1,86 +1,8 @@
 import React from "react";
 import Tree from "react-d3-tree";
 import clone from "clone";
-
-// const map = {
-//   'Иван0': debugData,
-//   'Александр00': debugData.children[0]
-// }
-
-const debugData = {
-  name: "Иван",
-  idx: "Иван0",
-  attributes: {
-    keyA: 'val A',
-    keyB: 'val B',
-    keyC: 'val C',
-  },
-  sex: 'man',
-  nodeSvgShape: {
-    shape: 'circle',
-    shapeProps: {
-      r: 10,
-      fill: 'blue',
-    },
-  },
-  styles: {
-    links: {
-            fill:"none",
-            stroke: "#000",
-            strokeWidth: "2px",
-            strokeDasharray:"2,2"
-          },
-  },
-  children: [
-    {
-      name: "Александр",
-      idx: "Александр00",
-      children: [],
-    },
-    {
-      name: "Алексей",
-      idx: "Алексей01",
-      children: [
-        {
-          name: "Михаил",
-          idx: "Михаил20",
-          children: [
-            {
-              name: "Колыван",
-              idx: "Колыван30",
-              children: [],
-            },
-            {
-              name: "Мария",
-              idx: "Мария31",
-              children: [],
-            }
-          ]
-        },
-        {
-          name: "Айрат",
-          idx: "Айрат21",
-          children: [],
-        },
-        {
-          name: "Тёма",
-          idx: "Тёма22",
-          children: [],
-        },
-        {
-          name: "Даня",
-          idx: "Даня23",
-          children: [],
-        },
-        {
-          name: "Стас",
-          idx: "Стас24",
-          children: [],
-        }
-      ]
-    }
-  ]
-};
+import { debugData, manCircle, womanCircle } from '../../utils/config';
+import './Tree.scss';
 
 const containerStyles = {
   width: "100%",
@@ -98,70 +20,89 @@ function getTreeRoot(tree) {
 export default class CenteredTree extends React.Component {
   state = {
     data: debugData,
-    value: ''
+    value: '',
   };
 
-
   handleClick = (nodeData, evt) => {
-    // console.log(nodeData, evt);
-    // const { id, name } = nodeData;
-    // console.log(nodeData);
-    // console.log(JSON.stringify(this.state.data));
+    //MODAL
+    const modal = document.querySelector('.modal');
+    modal.classList.add('target');
+    this.setState((prevState) => {
+      return {
+        nodeData,
+      };
+    });
+  }
 
-    nodeData.parent.children = nodeData.parent.children.filter((child) => child.idx !== nodeData.idx);
-    if (nodeData.parent._children) {
-      nodeData.parent._children = nodeData.parent._children.filter((child) => child.idx !== nodeData.idx);
+  addChildNode = (e) => {
+    e.preventDefault();
+    console.log(this.state.nodeData);
+    console.log(this.state.data);
+    console.log(this.state.value);
+    const { nodeData, value } = this.state;
+    //ADDING
+    if (nodeData.parent) {
+      nodeData.parent.children = nodeData.parent.children.map((child) => {
+        if (child.idx === nodeData.idx) {
+          if (child.children) {
+            child.children.push({
+              name: value,
+              idx: `${value}${nodeData.parent.name}`,
+              nodeSvgShape: manCircle,
+              children: [],
+            });
+          } else {
+            child.children = [];
+            child.children.push({
+              name: value,
+              idx: `${value}${nodeData.parent.name}`,
+              nodeSvgShape: manCircle,
+              children: [],
+            });
+          }
+        }
+        return child;
+      });
+    } else {
+      nodeData.children.push({
+        name: value,
+        idx: `${value}${nodeData.name}`,
+        nodeSvgShape: manCircle,
+        children: [],
+      });
     }
     this.setState((prevState) => {
       return {
         data: getTreeRoot(nodeData),
       };
     });
-
-    // const nodeStr = JSON.stringify(nodeData.parent)
-    // console.log(nodeStr);
-
-    // if (name === 'Иванов Александр Иванович') {
-      //this.addChildNode('gagasgasdfgfadsg');
-    // }
-    // console.log(id);
-  }
-
-  getFiniteValue(obj) {
-    getProp(obj);
-
-    function getProp(o) {
-        for(var prop in o) {
-            if(typeof(o[prop]) === 'object') {
-                getProp(o[prop]);
-            } else {
-                console.log('Finite value: ',o[prop])
-            }
-        }
-    }
-  }
-
-  addChildNode = (e) => {
-    // e.preventDefault();
-    const nextData = clone(this.state.data);
-    const target = nextData.children[0].children;
-    this.injectedNodesCount++;
-    target.push({
-      name: `${e}`,
-      id: `inserted-node-${e}`
-    });
-    this.setState({
-      data: nextData
-    });
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('target');
   };
 
   removeChildNode = () => {
-    const nextData = clone(this.state.data);
-    const target = nextData.children;
-    target.pop();
-    this.setState({
-      data: nextData
-    });
+    // УДАЛЕНИЕ ЭЛЕМЕНТА
+    const { nodeData } = this.state;
+    const { parent } = nodeData;
+    if (parent) {
+      parent.children = parent.children.filter((child) => child.idx !== nodeData.idx);
+      if (parent._children) {
+        parent._children = parent._children.filter((child) => child.idx !== nodeData.idx);
+      }
+      this.setState((prevState) => {
+        return {
+          data: getTreeRoot(nodeData),
+        };
+      });
+    } else {
+      this.setState((prevState) => {
+        return {
+          data: {},
+        };
+      });
+    }
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('target');
   };
 
   componentDidMount() {
@@ -176,28 +117,54 @@ export default class CenteredTree extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({ value: event.target.value });
+  }
+
+  closeModal(e) {
+    e.preventDefault();
+    const modal = document.querySelector('.modal');
+    modal.classList.remove('target');
   }
 
   render() {
     return (
-      <div style={containerStyles} ref={tc => (this.treeContainer = tc)}>
-        <form onSubmit={(e) => this.addChildNode(e)}>
-          <input name="aaa" type="text" value={this.state.value} onChange={(e) => this.handleChange(e)}></input>
-          <button>Add Node</button>
-        </form>
-        <button onClick={this.removeChildNode}>Remove Node</button>
+      <div style={containerStyles} ref={tc => (this.treeContainer = tc)} className="top-tree">
+        <div id="Modal1" className="modal">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              {/* <header>
+                <a href="#" className="closebtn" onClick={(e) => this.closeModal(e)}>X</a>
+              </header> */}
+              <div className="modal-body">
+                <div className="m-title">
+                  <h1>Внесите изменения</h1>
+                </div>
+                <div className="form-edit">
+                  <form className="form-edit-first" onSubmit={(e) => this.addChildNode(e)}>
+                    <input name="aaa" type="text" value={this.state.value} onChange={(e) => this.handleChange(e)}></input>
+                    <button>Добавить</button>
+                  </form>
+                  <div className="btn-remove-close form-edit-first">
+                    <button onClick={this.removeChildNode}>Удалить</button>
+                    <button onClick={(e) => this.closeModal(e)}>Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <Tree
           data={this.state.data}
           translate={this.state.translate}
           orientation={"vertical"}
           onClick={this.handleClick}
           // nodeSize={{x: 300, y: 150}	}
-          scaleExtent={{min: 0.1, max:2}}
-          separation={{siblings: 2, nonSiblings: 2}}
+          scaleExtent={{ min: 0.1, max: 2 }}
+          separation={{ siblings: 2, nonSiblings: 2 }}
           // initialDepth={1}
           // nodeSvgShape={{shape: 'none'}}
           collapsible={false}
+          textLayout={{ x: '18', y: '-8' }}
         />
       </div>
     );
