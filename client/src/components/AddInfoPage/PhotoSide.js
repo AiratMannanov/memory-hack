@@ -17,7 +17,7 @@ function guidGenerator() {
 
 const PhotoSide = (props) => {
 
-  const { personInfo, setInfo, info } = props
+  const { personInfo, setInfo } = props
 
   const [url, setUrl] = useState('');
   const [photoUpload, setPhotoUpload] = useState(false)

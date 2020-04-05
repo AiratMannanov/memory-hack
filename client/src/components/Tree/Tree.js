@@ -104,7 +104,7 @@ export default class CenteredTree extends React.Component {
 
   handleClick = (nodeData, evt) => {
     // console.log(nodeData, evt);
-    const { id, name } = nodeData;
+    // const { id, name } = nodeData;
     // console.log(nodeData);
     // console.log(JSON.stringify(this.state.data));
 

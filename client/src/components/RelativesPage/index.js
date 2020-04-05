@@ -9,22 +9,22 @@ const RelativesPage = () => {
       <h2>Герои, возможно, являются Вашими родственниками</h2>
       <div className="photos-container">
         <Link>
-          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" />
+          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" alt="hero" />
         </Link>
         <Link>
-          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" />
+          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" alt="hero" />
         </Link>
         <Link>
-          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" />
+          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" alt="hero" />
         </Link>
         <Link>
-          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" />
+          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" alt="hero" />
         </Link>
         <Link>
-          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" />
+          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" alt="hero" />
         </Link>
         <Link>
-          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" />
+          <img className="photo-of-hero" src="https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg" alt="hero" />
         </Link>
       </div>
     </div>

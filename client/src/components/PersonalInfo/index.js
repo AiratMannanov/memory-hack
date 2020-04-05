@@ -7,7 +7,7 @@ const PersonalInfo = () => {
   return (
     <div className="personal-info-container">
       <div className="img-wrapper">
-        <img src='https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg' />
+        <img src='https://roadheroes.storage.yandexcloud.net/dca8e4af17a13ed9b7d1ce8a8e0fde9a_origin.jpg' alt="hero" />
       </div>
       <div className="info-wrapper">
 
