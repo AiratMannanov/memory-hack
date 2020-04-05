@@ -152,7 +152,7 @@ export default class CenteredTree extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> 
         <Tree
           data={this.state.data}
           translate={this.state.translate}

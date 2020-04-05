@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { connect } from "react-redux";
-import { setInfo } from '../../redux/actions/actions';
+import { setInfo, setInfoClone } from '../../redux/actions/actions';
 import { storage } from '../../firebase/firebase';
 import firebase from 'firebase'
 import axios from 'axios'
@@ -9,7 +9,7 @@ import './formSide.scss'
 
 const FormSide = (props) => {
 
-  const { personInfo, setInfo } = props;
+  const { personInfo, setInfo, setInfoClone } = props;
 
   const firstName = useRef(null);
   const lastName = useRef(null);
@@ -56,13 +56,15 @@ const FormSide = (props) => {
           info:el,
         }
       })).then(arrayUsers => {
-        axios.post('/', {
-          arrayUsers,
-          user: {
-            url: userUrl,
-            info: person
-          },
-        }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+        const index = Math.floor((Math.random() * arrayUsers.length))
+        setInfoClone({...arrayUsers[index].info, url:arrayUsers[index].url})
+        // axios.post('/', {
+        //   arrayUsers,
+        //   user: {
+        //     url: userUrl,
+        //     info: person
+        //   },
+        // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
       })
 
     } else {
@@ -136,7 +138,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setInfo: (payload) => dispatch(setInfo(payload))
+  setInfo: (payload) => dispatch(setInfo(payload)),
+  setInfoClone: (payload) => dispatch(setInfoClone((payload)))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormSide)

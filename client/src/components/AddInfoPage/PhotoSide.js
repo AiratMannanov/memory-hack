@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { storage } from '../../firebase/firebase'
 import { connect } from "react-redux";
-import { setInfo } from '../../redux/actions/actions';
+import { setInfo, setInfoClone } from '../../redux/actions/actions';
 import axios from 'axios'
 import firebase from 'firebase'
 
@@ -17,7 +17,7 @@ function guidGenerator() {
 
 const PhotoSide = (props) => {
 
-  const { personInfo, setInfo } = props
+  const { personInfo, setInfo, setInfoClone } = props
 
   const [url, setUrl] = useState('');
   const [photoUpload, setPhotoUpload] = useState(false)
@@ -62,13 +62,15 @@ const PhotoSide = (props) => {
             info: el,
           }
         })).then(arrayUsers => {
-          axios.post('/', {
-            arrayUsers,
-            user: {
-              url: userUrl,
-              info: person,
-            },
-          }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
+          const index = Math.floor((Math.random() * arrayUsers.length))
+          setInfoClone({...arrayUsers[index].info, url:arrayUsers[index].url})
+          // axios.post('/', {
+          //   arrayUsers,
+          //   user: {
+          //     url: userUrl,
+          //     info: person,
+          //   },
+          // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
         })
       } else {
         const uploadTask = storage.ref(`${data}`).put(e.target.files[0]);
@@ -119,7 +121,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setInfo: (payload) => dispatch(setInfo(payload))
+  setInfo: (payload) => dispatch(setInfo(payload)),
+  setInfoClone: (payload) => dispatch(setInfoClone(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhotoSide)
