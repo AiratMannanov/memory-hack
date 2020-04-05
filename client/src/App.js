@@ -1,18 +1,28 @@
 import React, { Suspense } from 'react';
-import { connect } from 'react-redux'
 import './App.css';
-import MyComponent from './components/Tree/Tree';
+import {
+  Switch,
+  Route,
+} from 'react-router-dom';
 
-
-const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'))
+const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'));
+const Tree = React.lazy(() => import('./components/Tree/Tree'));
+// const NewTree = React.lazy(() => import('./components/NewTree/NewTree'));
 
 function App() {
   return (
     <div className="App">
       <Suspense fallback="Loading...">
-        <AddInfoPage />
+        <Switch>
+          <Route exact path='/'>
+              <AddInfoPage />
+          </Route>
+          <Route path='/tree'>
+            <Tree />
+            {/* <NewTree /> */}
+          </Route>
+        </Switch>
       </Suspense>
-      {/* <MyComponent /> */}
     </div>
   );
 }
