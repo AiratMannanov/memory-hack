@@ -49,24 +49,25 @@ const PhotoSide = (props) => {
       if (personInfo.firstName !== null && personInfo.lastname !== null) {
         setInfo(person)
         await firebase.database().ref(`${data}`).update(person)
-        const uploadTask = storage.ref(`${data}`).put(e.target.files[0]);
-        uploadTask.on('state_changed',
-          undefined,
-          undefined,
-          () => {
-            storage.ref(`${data}`).getDownloadURL().then((u) => {
-              setUrl(u);
-              setPhotoUpload(true)
-            });
-          });
+        await storage.ref(`${data}`).put(e.target.files[0]);
+        const userUrl = await storage.ref(`${data}`).getDownloadURL()
+        setUrl(userUrl)
+        setPhotoUpload(true)
         const allPeople = (await firebase.database().ref().once('value')).val()
         const res = Object.values(allPeople).filter(el => el.firstName === personInfo.firstName && el.lastName === personInfo.lastName && el.images !== data).map(el => el.images)
-        Promise.all(res.map(el => storage.ref(`${el}`).getDownloadURL())).then(arrayUrl => {
-          console.log(arrayUrl);
-          
+        Promise.all(res.map(async (el) => {
+          const url = await storage.ref(`${el}`).getDownloadURL()
+          return {
+            url,
+            key: el,
+          }
+        })).then(arrayUsers => {
           // axios.post('/user', {
-          //   arrayUrl,
-          //   userUrl: personInfo.images,
+          //   arrayUsers,
+          //   user: {
+          //     url: userUrl,
+          //     key: data,
+          //   },
           // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
         })
       } else {
@@ -91,7 +92,7 @@ const PhotoSide = (props) => {
     <div className="photo-side">
       <p>Добавление фотографии <br /> Героя войны</p>
       <div className="photo-input-form">
-        {photoUpload ?  null :<i className="ion-ios-person" /> }
+        <i className="ion-ios-person" />
         <div className="file-upload-form">
           <input id="file-upload" type="file" name="fileUpload" onChange={handleChange} />
           <label htmlFor="file-upload" id="file-drag">
