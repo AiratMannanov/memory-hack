@@ -12,6 +12,9 @@ const Navbar = () => {
         <Link to="/info/123" className="link-sidebar">
           Личный кабинет
         </Link >
+        <Link to="/relatives/123" className="link-sidebar">
+          Ваши совпадения
+        </Link >
         <Link to="/addinfo" className="link-sidebar">
           Добавить фото
         </Link >

@@ -11,6 +11,8 @@ const MainPage = React.lazy(() => import('./components/MainPage/'));
 const Tree = React.lazy(() => import('./components/Tree/Tree'));
 const Sidebar = React.lazy(() => import('./components/Sidebar/'));
 const PersonalInfo = React.lazy(() => import('./components/PersonalInfo/'));
+const RelativesPage = React.lazy(() => import('./components/RelativesPage/'));
+
 
 
 function App() {
@@ -21,6 +23,9 @@ function App() {
         <Switch>
           <Route exact path='/'>
             <MainPage />
+          </Route>
+          <Route path='/relatives/:id'>
+            <RelativesPage />
           </Route>
           <Route path='/addinfo'>
             <AddInfoPage />
