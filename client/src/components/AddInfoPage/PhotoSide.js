@@ -62,6 +62,7 @@ const PhotoSide = (props) => {
             info: el,
           }
         })).then(arrayUsers => {
+        console.log(userUrl);
           axios.post('/', {
             arrayUsers,
             user: {
