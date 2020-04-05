@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { connect } from "react-redux";
 import { setInfo } from '../../redux/actions/actions';
-import { storage } from '../../firebase/firebase'
+import { storage } from '../../firebase/firebase';
 import firebase from 'firebase'
 import axios from 'axios'
 

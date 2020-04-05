@@ -5,13 +5,13 @@ import {
   Route,
 } from 'react-router-dom';
 
-const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'));
-const MainPage = React.lazy(() => import('./components/MainPage/'));
+const AddInfoPage = React.lazy(() => import('./components/AddInfoPage'));
+const MainPage = React.lazy(() => import('./components/MainPage'));
 
 const Tree = React.lazy(() => import('./components/Tree/Tree'));
-const Sidebar = React.lazy(() => import('./components/Sidebar/'));
-const PersonalInfo = React.lazy(() => import('./components/PersonalInfo/'));
-const RelativesPage = React.lazy(() => import('./components/RelativesPage/'));
+const Sidebar = React.lazy(() => import('./components/Sidebar'));
+const PersonalInfo = React.lazy(() => import('./components/PersonalInfo'));
+const RelativesPage = React.lazy(() => import('./components/RelativesPage'));
 
 
 
