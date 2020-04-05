@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 
 const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'));
+const MainPage = React.lazy(() => import('./components/MainPage/'));
+
 const Tree = React.lazy(() => import('./components/Tree/Tree'));
 const Sidebar = React.lazy(() => import('./components/Sidebar/'));
 const PersonalInfo = React.lazy(() => import('./components/PersonalInfo/'));
@@ -18,6 +20,9 @@ function App() {
         <Sidebar />
         <Switch>
           <Route exact path='/'>
+            <MainPage />
+          </Route>
+          <Route path='/addinfo'>
             <AddInfoPage />
           </Route>
           <Route path='/tree'>
