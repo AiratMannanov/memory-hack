@@ -18,12 +18,16 @@ router.get('/', (req, res) => {
 
 // Request to azure
 router.post('/', (req, res) => {
-  const { userUrl, arrayUrl } = req.body;
-  console.log(req.body);
+  const { user, arrayUsers } = req.body;
+  console.log(user, arrayUsers);
+
+  if (arrayUsers.length) {
+    res.json({ err: 'There is no similar heros' })
+  }
 
   // Getting all id's of imgs from azure face
 
-  const IDs = arrayUrl.map(img => {
+  const IDs = arrayUsers.map(img => {
     const detectionFaceOptions = setOptionsForDetectionRequest(img);
 
     return requestDetectionFace(detectionFaceOptions);
@@ -32,7 +36,7 @@ router.post('/', (req, res) => {
   Promise.all(IDs)
     .then(imgIds => {
       // Getting id of img which we need to compare
-      const imgToCompareOptions = setOptionsForDetectionRequest(userUrl);
+      const imgToCompareOptions = setOptionsForDetectionRequest(user);
       const imgToCompare = requestDetectionFace(imgToCompareOptions);
 
       imgToCompare.then(imgId => {
