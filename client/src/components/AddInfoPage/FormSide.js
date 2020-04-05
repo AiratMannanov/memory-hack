@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { setInfo, setInfoClone } from '../../redux/actions/actions';
 import { storage } from '../../firebase/firebase';
 import firebase from 'firebase'
+import {compose} from 'redux'
+import {withRouter} from 'react-router'
 import axios from 'axios'
 
 import './formSide.scss'
@@ -44,10 +46,11 @@ const FormSide = (props) => {
         email: email.current.value,
         images: personInfo.images,
       }
-      setInfo(person)
+      // setInfo(person)
       await firebase.database().ref(`${personInfo.images}`).update(person)
       const allPeople = (await firebase.database().ref().once('value')).val()
       const userUrl = await storage.ref(`${personInfo.images}`).getDownloadURL()
+      setInfo({...person, url:userUrl})
       const res = Object.values(allPeople).filter(el => el.firstName === firstName.current.value && el.lastName === lastName.current.value && el.images !== personInfo.images);
       Promise.all(res.map(async (el) => {
         const url = await storage.ref(`${el.images}`).getDownloadURL()
@@ -57,7 +60,8 @@ const FormSide = (props) => {
         }
       })).then(arrayUsers => {
         const index = Math.floor((Math.random() * arrayUsers.length))
-        setInfoClone({...arrayUsers[index].info, url:arrayUsers[index].url})
+        // setInfoClone({...arrayUsers[index].info, url:arrayUsers[index].url})
+        props.history.push('/info/123')
         // axios.post('/', {
         //   arrayUsers,
         //   user: {
@@ -142,4 +146,7 @@ const mapDispatchToProps = (dispatch) => ({
   setInfoClone: (payload) => dispatch(setInfoClone((payload)))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormSide)
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(FormSide);

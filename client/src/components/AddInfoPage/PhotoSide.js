@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { storage } from '../../firebase/firebase'
 import { connect } from "react-redux";
 import { setInfo, setInfoClone } from '../../redux/actions/actions';
+import {compose} from 'redux'
+import {withRouter} from 'react-router'
 import axios from 'axios'
 import firebase from 'firebase'
 
@@ -47,10 +49,10 @@ const PhotoSide = (props) => {
         images: data,
       }
       if (personInfo.firstName !== null && personInfo.lastname !== null) {
-        setInfo(person)
         await firebase.database().ref(`${data}`).update(person)
         await storage.ref(`${data}`).put(e.target.files[0]);
         const userUrl = await storage.ref(`${data}`).getDownloadURL()
+        setInfo({...person, url:userUrl})
         setUrl(userUrl)
         setPhotoUpload(true)
         const allPeople = (await firebase.database().ref().once('value')).val()
@@ -63,7 +65,8 @@ const PhotoSide = (props) => {
           }
         })).then(arrayUsers => {
           const index = Math.floor((Math.random() * arrayUsers.length))
-          setInfoClone({...arrayUsers[index].info, url:arrayUsers[index].url})
+          // setInfoClone({...arrayUsers[index].info, url:arrayUsers[index].url})
+          props.history.push('/info/123')
           // axios.post('/', {
           //   arrayUsers,
           //   user: {
@@ -125,4 +128,7 @@ const mapDispatchToProps = dispatch => ({
   setInfoClone: (payload) => dispatch(setInfoClone(payload))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhotoSide)
+export default compose(
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(PhotoSide);

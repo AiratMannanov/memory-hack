@@ -15,7 +15,8 @@ const initialState = {
     historyAboutPerson: null,
     additionalLinks: null,
     email: null,
-    images: null
+    images: null,
+    url: null,
   },
   userInfo: {
     firstName: null,
