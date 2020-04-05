@@ -6,17 +6,17 @@ const Navbar = () => {
   return (
     <div className="sidebar-container">
       <ul>
-        <Link to="/" className="link-sidebar">
+        {/* <Link to="/" className="link-sidebar">
           Главная страница
-        </Link >
-        <Link to="/" className="link-sidebar">
+        </Link > */}
+        <Link to="/info/" className="link-sidebar">
           Личный кабинет
         </Link >
         <Link to="/" className="link-sidebar">
           Добавить фото
         </Link >
         <Link to="/tree" className="link-sidebar">
-          Генеалогическое древо
+          Древо памяти
         </Link >
       </ul>
     </div>
