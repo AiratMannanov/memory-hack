@@ -1,0 +1,44 @@
+.container-photo {
+    display: grid;  
+    grid-template-areas: "post-11 post-12 post-13"  
+                         "post-21 post-22 post-23"  
+                         "post-31 post-32 post-33"; 
+    grid-template-rows: repeat(3, 300px);
+    grid-template-columns: repeat(3, 300px);
+    align-items: center;
+    justify-items: stretch;
+    text-align: center;
+    justify-content: center;
+  }
+  .post-11 {
+    grid-area: post-11;
+  }
+  .post-12 {           
+    grid-area: post-12;
+  }
+  .post-13 {
+    grid-area: post-13;
+  }
+  .post-21 {           
+    grid-area: post-21;
+  }
+  .post-22 {
+    grid-area: post-22;
+  }
+  .post-23 {           
+    grid-area: post-23;
+  }
+  .post-31 {           
+    grid-area: post-31;
+  }
+  .post-32 {           
+    grid-area: post-32;
+  }
+  .post-33 {           
+    grid-area: post-33;
+  }
+img {
+  width: 250px;
+  height: 250px;
+  background-image: url("https://s1.1zoom.ru/big3/147/Waterfalls_Summer_Rivers_Rays_of_light_563524_2800x1874.jpg");
+}

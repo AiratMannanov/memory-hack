@@ -28,8 +28,8 @@ function requestDetectionFace(options) {
         if (error) {
           throw new Error(error)
         }
-
         let jsonResponse = JSON.parse(body);
+        console.log(jsonResponse, 'response')
         resolve(jsonResponse[0].faceId)
       });
 
