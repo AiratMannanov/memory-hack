@@ -117,28 +117,44 @@ export default class CenteredTree extends React.Component {
 
 
   handleClick = (nodeData, evt) => {
-    // console.log(nodeData, evt);
     const { id, name } = nodeData;
-    // console.log(nodeData);
-    // console.log(JSON.stringify(this.state.data));
 
-    nodeData.parent.children = nodeData.parent.children.filter((child) => child.idx !== nodeData.idx);
-    if (nodeData.parent._children) {
-      nodeData.parent._children = nodeData.parent._children.filter((child) => child.idx !== nodeData.idx);
-    }
+    nodeData.parent.children = nodeData.parent.children.map((child) => {
+      if (child.idx === nodeData.idx) {
+        // console.log(child.idx);
+        // console.log(nodeData.idx);
+        
+        console.log(child);
+        if (child.children) {
+          child.children.push({
+            name: "FFFFFFFFFFFFFFFFFFFFFFFF",
+            idx: "Стас24",
+            nodeSvgShape: manCircle,
+            children: [],
+          });
+        } else {
+          child.children = [];
+          child.children.push({
+            name: "Стас",
+            idx: "Стас24",
+            nodeSvgShape: manCircle,
+            children: [],
+          });
+        }
+      }
+      return child;
+    });
+
+    // УДАЛЕНИЕ ЭЛЕМЕНТА
+    // nodeData.parent.children = nodeData.parent.children.filter((child) => child.idx !== nodeData.idx);
+    // if (nodeData.parent._children) {
+    //   nodeData.parent._children = nodeData.parent._children.filter((child) => child.idx !== nodeData.idx);
+    // }
     this.setState((prevState) => {
       return {
         data: getTreeRoot(nodeData),
       };
     });
-
-    // const nodeStr = JSON.stringify(nodeData.parent)
-    // console.log(nodeStr);
-
-    // if (name === 'Иванов Александр Иванович') {
-      //this.addChildNode('gagasgasdfgfadsg');
-    // }
-    // console.log(id);
   }
 
   getFiniteValue(obj) {
