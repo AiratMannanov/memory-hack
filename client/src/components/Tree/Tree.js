@@ -1,5 +1,7 @@
 import React from "react";
 import Tree from "react-d3-tree";
+import { connect } from "react-redux";
+import { setInfo } from '../../redux/actions/actions';
 import clone from "clone";
 import { debugData, manCircle, womanCircle } from '../../utils/config';
 import './Tree.scss';
@@ -17,9 +19,23 @@ function getTreeRoot(tree) {
   return root;
 }
 
-export default class CenteredTree extends React.Component {
+class CenteredTree extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  
   state = {
-    data: debugData,
+    data: {
+      name: `${this.props.personInfo.firstName ? this.props.personInfo.firstName : 'Добавь Героя'} 
+      ${this.props.personInfo.lastName ? this.props.personInfo.lastName : ''} 
+      ${this.props.personInfo.middleName ? this.props.personInfo.middleName : ''}`,
+      idx: `${this.props.personInfo.firstName ? this.props.personInfo.firstName : 'Добавь Героя'} 
+      ${this.props.personInfo.lastName ? this.props.personInfo.lastName : ''} 
+      ${this.props.personInfo.middleName ? this.props.personInfo.middleName : ''}`,
+      nodeSvgShape: manCircle,
+      children: [],
+    },
     value: '',
   };
 
@@ -64,6 +80,9 @@ export default class CenteredTree extends React.Component {
         return child;
       });
     } else {
+      if (!nodeData.children) {
+        nodeData.children = [];
+      }
       nodeData.children.push({
         name: value,
         idx: `${value}${nodeData.name}`,
@@ -74,6 +93,7 @@ export default class CenteredTree extends React.Component {
     this.setState((prevState) => {
       return {
         data: getTreeRoot(nodeData),
+        value: '',
       };
     });
     const modal = document.querySelector('.modal');
@@ -92,12 +112,14 @@ export default class CenteredTree extends React.Component {
       this.setState((prevState) => {
         return {
           data: getTreeRoot(nodeData),
+          value: '',
         };
       });
     } else {
       this.setState((prevState) => {
         return {
           data: {},
+          value: '',
         };
       });
     }
@@ -124,9 +146,15 @@ export default class CenteredTree extends React.Component {
     e.preventDefault();
     const modal = document.querySelector('.modal');
     modal.classList.remove('target');
+    this.setState((prevState) => {
+      return {
+        value: '',
+      };
+    });
   }
 
   render() {
+    console.log('PROOOOOOOOOPS', this.props);
     return (
       <div style={containerStyles} ref={tc => (this.treeContainer = tc)} className="top-tree">
         <div id="Modal1" className="modal">
@@ -166,7 +194,22 @@ export default class CenteredTree extends React.Component {
           collapsible={false}
           textLayout={{ x: '18', y: '-8' }}
         />
+        <div className="social">
+          <img className="icon" src="./instagram.png" alt="instagram" />
+          <img className="icon" src="./facebook.png" alt="facebook" />
+          <img className="icon" src="./vk.png" alt="vk" />
+        </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  personInfo: state.personInfo
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setInfo: (payload) => dispatch(setInfo(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CenteredTree)
