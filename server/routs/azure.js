@@ -12,7 +12,7 @@ const {
 
 // Basic router
 router.get('/', (req, res) => {
-  res.send('Server Working')
+  res.render('index');
 });
 
 
@@ -20,8 +20,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const { urlToCompare, urls } = req.body;
 
-
-  // Get all id's of imgs
+  // Getting all id's of imgs from azure face
 
   const IDs = urls.map(img => {
     const detectionFaceOptions = setOptionsForDetectionRequest(img);
@@ -31,6 +30,7 @@ router.post('/', (req, res) => {
 
   Promise.all(IDs)
     .then(imgIds => {
+      // Getting id of img which we need to compare
       const imgToCompareOptions = setOptionsForDetectionRequest(urlToCompare);
       const imgToCompare = requestDetectionFace(imgToCompareOptions);
 
@@ -53,4 +53,4 @@ router.post('/', (req, res) => {
 
 });
 
-module.exports = router
+module.exports = router;

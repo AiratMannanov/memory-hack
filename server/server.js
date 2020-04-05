@@ -16,10 +16,10 @@ const azureRouter = require('./routs/azure');
 
 // Middlewares
 app.use(cors());
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(logger('dev'));
 
 // Path's middleware
 app.use('/', azureRouter);
