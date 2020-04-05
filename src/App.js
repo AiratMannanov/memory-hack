@@ -1,18 +1,43 @@
 import React, { Suspense } from 'react';
-import { connect } from 'react-redux'
 import './App.css';
-import MyComponent from './components/Tree/Tree';
+import {
+  Switch,
+  Route,
+} from 'react-router-dom';
+
+const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'));
+const MainPage = React.lazy(() => import('./components/MainPage/'));
+
+const Tree = React.lazy(() => import('./components/Tree/Tree'));
+const Sidebar = React.lazy(() => import('./components/Sidebar/'));
+const PersonalInfo = React.lazy(() => import('./components/PersonalInfo/'));
+const RelativesPage = React.lazy(() => import('./components/RelativesPage/'));
 
 
-const AddInfoPage = React.lazy(() => import('./components/AddInfoPage/'))
 
 function App() {
   return (
     <div className="App">
       <Suspense fallback="Loading...">
-        <AddInfoPage />
+        <Sidebar />
+        <Switch>
+          <Route exact path='/'>
+            <MainPage />
+          </Route>
+          <Route path='/relatives/:id'>
+            <RelativesPage />
+          </Route>
+          <Route path='/addinfo'>
+            <AddInfoPage />
+          </Route>
+          <Route path='/tree'>
+            <Tree />
+          </Route>
+          <Route path="/info/:id">
+            <PersonalInfo />
+          </Route>
+        </Switch>
       </Suspense>
-      {/* <MyComponent /> */}
     </div>
   );
 }

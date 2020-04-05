@@ -1,0 +1,26 @@
+.relatives-page-container {
+  margin-left: 12%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h2 {
+    font-size: 3rem;
+    font-weight: 400;
+    color: #716e67;
+  }
+}
+
+.photos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.photo-of-hero {
+  max-width: 30rem;
+  margin-left: 1rem;
+  margin-top: 2rem;
+}
