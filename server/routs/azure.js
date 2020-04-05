@@ -23,6 +23,7 @@ router.post('/', (req, res) => {
 
   if (arrayUsers.length) {
     res.json({ err: 'There is no similar heros' })
+    return
   }
 
   // Getting all id's of imgs from azure face
@@ -47,9 +48,10 @@ router.post('/', (req, res) => {
             const { err } = data;
 
             if (err) {
+              // console.error(err)
               res.json(err)
             } else {
-              console.log(data)
+              // console.log(data)
               res.json(data)
             }
 
