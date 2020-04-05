@@ -1,0 +1,122 @@
+.nodeNameBase {
+  stroke: none;
+  fill: rgb(61, 61, 61);
+}
+
+// Animations
+@keyframes fadeIn {
+  from {
+    scale: 0.8;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes fromBottom {
+  from {
+    bottom: -50px;
+    opacity: 0;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+.top-tree {
+  display: block;
+  padding: 20px;
+  text-align: center;
+  a {
+    &.btn-action {
+      background-color: #4CAF50;
+      /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      &:focus,
+      &:active {
+        outline: none;
+      }
+      &:hover {
+        background-color: darken(#4CAF50, 5%);
+      }
+    }
+  }
+}
+
+.modal {
+  display: none; //change to none
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  background-color: #fff;
+  &.target {
+    display: table;
+    position: absolute;
+    animation-name: fadeIn;
+    animation-duration: 0.3s;
+
+    .modal-dialog {
+      .modal-content {
+        .modal-body {
+          .m-title {
+            opacity: 1;
+            animation-name: fromBottom;
+            animation-duration: 0.5s;
+          }
+        }
+      }
+    }
+  }
+  .modal-dialog {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+    .modal-content {
+      outline: 0;
+      width: 100%;
+      height: 100%;
+      //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      header {
+        display: block;
+        padding: 10px;
+        height: 50px;
+        .closebtn {
+          color: #000;
+          display: block;
+          float: right;
+          font-size: 24px;
+          text-decoration: none;
+          height: 40px;
+        }
+      }
+      .modal-body {
+        padding: 15px;
+        .m-title {
+          position: relative;
+          opacity: 0;
+          text-align: center;
+          width: 100%;
+        .form-edit {
+          .btn-remove-close {
+            
+          }
+        }
+        }
+      }
+    }
+  }
+}
