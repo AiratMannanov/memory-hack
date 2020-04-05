@@ -54,19 +54,19 @@ const PhotoSide = (props) => {
         setUrl(userUrl)
         setPhotoUpload(true)
         const allPeople = (await firebase.database().ref().once('value')).val()
-        const res = Object.values(allPeople).filter(el => el.firstName === personInfo.firstName && el.lastName === personInfo.lastName && el.images !== data).map(el => el.images)
+        const res = Object.values(allPeople).filter(el => el.firstName === personInfo.firstName && el.lastName === personInfo.lastName && el.images !== data)
         Promise.all(res.map(async (el) => {
-          const url = await storage.ref(`${el}`).getDownloadURL()
+          const url = await storage.ref(`${el.images}`).getDownloadURL()
           return {
             url,
-            key: el,
+            info: el,
           }
         })).then(arrayUsers => {
           // axios.post('/user', {
           //   arrayUsers,
           //   user: {
           //     url: userUrl,
-          //     key: data,
+          //     info: person,
           //   },
           // }).then(resUrls => console.log(resUrls)).catch(e => console.log(e))
         })
