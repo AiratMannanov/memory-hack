@@ -56,8 +56,6 @@ const FormSide = (props) => {
           info:el,
         }
       })).then(arrayUsers => {
-        console.log(arrayUsers);
-        console.log(userUrl);
         axios.post('/', {
           arrayUsers,
           user: {
