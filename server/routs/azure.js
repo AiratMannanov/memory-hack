@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 // Request to azure
 router.post('/', (req, res) => {
   const { user, arrayUsers } = req.body;
-  console.log(user, arrayUsers);
+  console.log(user, '/n',arrayUsers);
 
   if (arrayUsers.length) {
     res.json({ err: 'There is no similar heros' })
